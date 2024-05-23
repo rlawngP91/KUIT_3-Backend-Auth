@@ -1,7 +1,10 @@
 package kuit3.backend.controller;
 
+import kuit3.backend.common.argument_resolver.PreAuthorize;
 import kuit3.backend.common.exception.UserException;
 import kuit3.backend.common.response.BaseResponse;
+import kuit3.backend.dto.user.PostLoginRequest;
+import kuit3.backend.dto.user.PostLoginResponse;
 import kuit3.backend.dto.user.PostUserRequest;
 import kuit3.backend.dto.user.PostUserResponse;
 import kuit3.backend.service.UserService;
@@ -35,5 +38,18 @@ public class UserController {
             throw new UserException(INVALID_USER_VALUE, getErrorMessages(bindingResult));
         }
         return new BaseResponse<>(userService.signUp(postUserRequest));
+    }
+
+    /**
+     * 로그인
+     */
+    @PostMapping("/login")
+    public BaseResponse<PostLoginResponse> login(@Validated @RequestBody PostLoginRequest postLoginRequest, BindingResult bindingResult,
+                                                 @PreAuthorize long userId) {
+        log.info("[UserController.login] userId={}", userId);
+        if (bindingResult.hasErrors()) {
+            throw new UserException(INVALID_USER_VALUE, getErrorMessages(bindingResult));
+        }
+        return new BaseResponse<>(userService.login(postLoginRequest, userId));
     }
 }

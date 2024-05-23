@@ -2,6 +2,8 @@ package kuit3.backend.service;
 
 import kuit3.backend.common.exception.UserException;
 import kuit3.backend.dao.UserDao;
+import kuit3.backend.dto.user.PostLoginRequest;
+import kuit3.backend.dto.user.PostLoginResponse;
 import kuit3.backend.dto.user.PostUserRequest;
 import kuit3.backend.dto.user.PostUserResponse;
 import kuit3.backend.jwt.JwtProvider;
@@ -10,8 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static kuit3.backend.common.response.status.BaseExceptionResponseStatus.DUPLICATE_EMAIL;
-import static kuit3.backend.common.response.status.BaseExceptionResponseStatus.DUPLICATE_NICKNAME;
+import static kuit3.backend.common.response.status.BaseExceptionResponseStatus.*;
 
 @Slf4j
 @Service
@@ -46,4 +47,26 @@ public class UserService {
         return new PostUserResponse(userId, jwt);
     }
 
+    public long findUserIdByEmail(String email) {
+        return userDao.findUserIdByEmail(email);
+    }
+
+    public PostLoginResponse login(PostLoginRequest postLoginRequest, long userId) {
+        log.info("[UserService.login]");
+
+        // TODO: 1. 비밀번호 일치 확인
+        validatePassword(postLoginRequest.getPassword(), userId);
+
+        // TODO: 2. JWT 갱신
+        String updatedJwt = jwtProvider.createToken(postLoginRequest.getEmail(), userId);
+
+        return new PostLoginResponse(userId, updatedJwt);
+    }
+
+    private void validatePassword(String password, long userId) {
+        String encodedPassword = userDao.getPasswordByUserId(userId);
+        if (!passwordEncoder.matches(password, encodedPassword)) {
+            throw new UserException(PASSWORD_NO_MATCH);
+        }
+    }
 }
