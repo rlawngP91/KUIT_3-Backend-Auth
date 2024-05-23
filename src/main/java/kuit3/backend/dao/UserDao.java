@@ -65,4 +65,12 @@ public class UserDao {
                 "user_id", userId);
         return jdbcTemplate.update(sql, param);
     }
+
+    public int modifyUserStatus_deleted(long userId) {
+        String sql = "update user set status=:status where user_id=:user_id";
+        Map<String, Object> param = Map.of(
+                "status", "deleted",
+                "user_id", userId);
+        return jdbcTemplate.update(sql, param);
+    }
 }

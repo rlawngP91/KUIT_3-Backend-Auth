@@ -63,6 +63,13 @@ public class UserService {
         return new PostLoginResponse(userId, updatedJwt);
     }
 
+    public void modifyUserStatus_deleted(long userId) {
+        int affectedRows = userDao.modifyUserStatus_deleted(userId);
+        if (affectedRows != 1) {
+            throw new DatabaseException(DATABASE_ERROR);
+        }
+    }
+
     public void modifyUserStatus_dormant(long userId) {
         int affectedRows = userDao.modifyUserStatus_dormant(userId);
         if (affectedRows != 1) {
