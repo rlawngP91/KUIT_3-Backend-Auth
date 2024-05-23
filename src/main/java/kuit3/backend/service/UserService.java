@@ -46,22 +46,6 @@ public class UserService {
         return new PostUserResponse(userId, jwt);
     }
 
-    public long getUserIdByEmail(String email) {
-        return userDao.getUserIdByEmail(email);
-    }
-
-    public PostLoginResponse login(PostLoginRequest postLoginRequest, long userId) {
-        log.info("[UserService.login]");
-
-        // TODO: 1. 비밀번호 일치 확인
-        validatePassword(postLoginRequest.getPassword(), userId);
-
-        // TODO: 2. JWT 갱신
-        String updatedJwt = jwtProvider.createToken(postLoginRequest.getEmail(), userId);
-
-        return new PostLoginResponse(userId, updatedJwt);
-    }
-
     public void modifyUserStatus_deleted(long userId) {
         log.info("[UserService.modifyUserStatus_deleted]");
         int affectedRows = userDao.modifyUserStatus_deleted(userId);
@@ -90,13 +74,6 @@ public class UserService {
     public List<GetUserResponse> getUsers(String nickname, String email, String status) {
         log.info("[UserService.getUsers]");
         return userDao.getUsers(nickname, email, status);
-    }
-
-    private void validatePassword(String password, long userId) {
-        String encodedPassword = userDao.getPasswordByUserId(userId);
-        if (!passwordEncoder.matches(password, encodedPassword)) {
-            throw new UserException(PASSWORD_NO_MATCH);
-        }
     }
 
     private void validateEmail(String email) {
