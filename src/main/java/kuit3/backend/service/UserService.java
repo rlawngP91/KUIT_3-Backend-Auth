@@ -77,6 +77,14 @@ public class UserService {
         }
     }
 
+    public void modifyNickname(long userId, String nickname) {
+        validateNickname(nickname);
+        int affectedRows = userDao.modifyNickname(userId, nickname);
+        if (affectedRows != 1) {
+            throw new DatabaseException(DATABASE_ERROR);
+        }
+    }
+
     private void validatePassword(String password, long userId) {
         String encodedPassword = userDao.getPasswordByUserId(userId);
         if (!passwordEncoder.matches(password, encodedPassword)) {

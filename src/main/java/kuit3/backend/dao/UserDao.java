@@ -73,4 +73,12 @@ public class UserDao {
                 "user_id", userId);
         return jdbcTemplate.update(sql, param);
     }
+
+    public int modifyNickname(long userId, String nickname) {
+        String sql = "update user set nickname=:nickname where user_id=:user_id";
+        Map<String, Object> param = Map.of(
+                "nickname", nickname,
+                "user_id", userId);
+        return jdbcTemplate.update(sql, param);
+    }
 }
