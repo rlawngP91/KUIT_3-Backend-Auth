@@ -29,7 +29,6 @@ public class UserController {
      */
     @PostMapping("")
     public BaseResponse<PostUserResponse> signUp(@Validated @RequestBody PostUserRequest postUserRequest, BindingResult bindingResult) {
-        log.info("[UserController.signUp]");
         if (bindingResult.hasErrors()) {
             throw new UserException(INVALID_USER_VALUE, getErrorMessages(bindingResult));
         }
@@ -41,7 +40,6 @@ public class UserController {
      */
     @PatchMapping("/{userId}/dormant")
     public BaseResponse<Object> modifyUserStatus_dormant(@PathVariable long userId) {
-        log.info("[UserController.modifyUserStatus_dormant]");
         userService.modifyUserStatus_dormant(userId);
         return new BaseResponse<>(null);
     }
@@ -51,7 +49,6 @@ public class UserController {
      */
     @PatchMapping("/{userId}/deleted")
     public BaseResponse<Object> modifyUserStatus_deleted(@PathVariable long userId) {
-        log.info("[UserController.modifyUserStatus_delete]");
         userService.modifyUserStatus_deleted(userId);
         return new BaseResponse<>(null);
     }
@@ -62,7 +59,6 @@ public class UserController {
     @PatchMapping("/{userId}/nickname")
     public BaseResponse<String> modifyNickname(@PathVariable long userId,
                                                @Validated @RequestBody PatchNicknameRequest patchNicknameRequest, BindingResult bindingResult) {
-        log.info("[UserController.modifyNickname]");
         if (bindingResult.hasErrors()) {
             throw new UserException(INVALID_USER_VALUE, getErrorMessages(bindingResult));
         }
@@ -78,7 +74,6 @@ public class UserController {
             @RequestParam(required = false, defaultValue = "") String nickname,
             @RequestParam(required = false, defaultValue = "") String email,
             @RequestParam(required = false, defaultValue = "active") String status) {
-        log.info("[UserController.getUsers]");
         if (!status.equals("active") && !status.equals("dormant") && !status.equals("deleted")) {
             throw new UserException(INVALID_USER_STATUS);
         }

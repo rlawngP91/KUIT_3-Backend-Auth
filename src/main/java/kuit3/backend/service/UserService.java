@@ -24,7 +24,6 @@ public class UserService {
     private final JwtProvider jwtProvider;
 
     public PostUserResponse signUp(PostUserRequest postUserRequest) {
-        log.info("[UserService.signUp]");
 
         // TODO: 1. validation (중복 검사)
         validateEmail(postUserRequest.getEmail());
@@ -47,7 +46,6 @@ public class UserService {
     }
 
     public void modifyUserStatus_deleted(long userId) {
-        log.info("[UserService.modifyUserStatus_deleted]");
         int affectedRows = userDao.modifyUserStatus_deleted(userId);
         if (affectedRows != 1) {
             throw new DatabaseException(DATABASE_ERROR);
@@ -55,7 +53,6 @@ public class UserService {
     }
 
     public void modifyUserStatus_dormant(long userId) {
-        log.info("[UserService.modifyUserStatus_dormant]");
         int affectedRows = userDao.modifyUserStatus_dormant(userId);
         if (affectedRows != 1) {
             throw new DatabaseException(DATABASE_ERROR);
@@ -63,7 +60,6 @@ public class UserService {
     }
 
     public void modifyNickname(long userId, String nickname) {
-        log.info("[UserService.modifyNickname]");
         validateNickname(nickname);
         int affectedRows = userDao.modifyNickname(userId, nickname);
         if (affectedRows != 1) {
@@ -72,7 +68,6 @@ public class UserService {
     }
 
     public List<GetUserResponse> getUsers(String nickname, String email, String status) {
-        log.info("[UserService.getUsers]");
         return userDao.getUsers(nickname, email, status);
     }
 

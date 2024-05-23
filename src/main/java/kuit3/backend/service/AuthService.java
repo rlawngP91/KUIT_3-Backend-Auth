@@ -24,7 +24,6 @@ public class AuthService {
     private final JwtProvider jwtProvider;
 
     public LoginResponse login(LoginRequest authRequest) {
-        log.info("[AuthService.login]");
 
         String email = authRequest.getEmail();
 

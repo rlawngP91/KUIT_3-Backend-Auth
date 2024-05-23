@@ -8,7 +8,6 @@ import kuit3.backend.common.exception.jwt.bad_request.JwtNoTokenException;
 import kuit3.backend.common.exception.jwt.bad_request.JwtUnsupportedTokenException;
 import kuit3.backend.jwt.JwtProvider;
 import kuit3.backend.service.AuthService;
-import kuit3.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +28,6 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        log.info("[JwtAuthInterceptor.preHandle]");
 
         String accessToken = resolveAccessToken(request);
         validateAccessToken(accessToken);

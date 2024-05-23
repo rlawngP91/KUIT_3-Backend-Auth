@@ -15,7 +15,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class JwtAuthHandlerArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        log.info("[JwtHandlerArgumentResolver.supportsParameter]");
         boolean hasAnnotation = parameter.hasParameterAnnotation(PreAuthorize.class);
         boolean hasType = long.class.isAssignableFrom(parameter.getParameterType());
         log.info("hasAnnotation={}, hasType={}, hasAnnotation && hasType={}", hasAnnotation, hasType, hasAnnotation&&hasType);
@@ -24,7 +23,6 @@ public class JwtAuthHandlerArgumentResolver implements HandlerMethodArgumentReso
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        log.info("[JwtAuthHandlerArgumentResolver.resolveArgument]");
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         log.info("userId={}", request.getAttribute("userId"));
         return request.getAttribute("userId");
