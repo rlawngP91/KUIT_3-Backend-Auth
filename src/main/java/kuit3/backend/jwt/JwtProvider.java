@@ -27,7 +27,7 @@ public class JwtProvider {
 
         Claims claims = Jwts.claims().setSubject(principal);
         Date now = new Date();
-        Date validity = new Date(now.getTime() + 6 * 60 * 60 * 1000L);
+        Date validity = new Date(now.getTime() + JWT_EXPIRED_IN);
 
         return Jwts.builder()
                 .setClaims(claims)
