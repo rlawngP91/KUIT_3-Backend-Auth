@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static kuit3.backend.common.response.status.BaseExceptionResponseStatus.INVALID_USER_VALUE;
 import static kuit3.backend.util.BindingResultUtils.getErrorMessages;
@@ -51,5 +48,15 @@ public class UserController {
             throw new UserException(INVALID_USER_VALUE, getErrorMessages(bindingResult));
         }
         return new BaseResponse<>(userService.login(postLoginRequest, userId));
+    }
+
+    /**
+     * 회원 휴면
+     */
+    @PatchMapping("/{userId}/dormant")
+    public BaseResponse<Object> modifyUserStatus_dormant(@PathVariable long userId) {
+        log.info("[UserController.modifyUserStatus_dormant]");
+        userService.modifyUserStatus_dormant(userId);
+        return new BaseResponse<>(null);
     }
 }
