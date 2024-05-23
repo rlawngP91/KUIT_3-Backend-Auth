@@ -1,9 +1,9 @@
 package kuit3.backend.jwt;
 
 import io.jsonwebtoken.*;
-import kuit3.backend.common.exception.jwt.JwtInvalidTokenException;
-import kuit3.backend.common.exception.jwt.JwtMalformedTokenException;
-import kuit3.backend.common.exception.jwt.JwtUnsupportedTokenException;
+import kuit3.backend.common.exception.jwt.unauthorized.JwtInvalidTokenException;
+import kuit3.backend.common.exception.jwt.unauthorized.JwtMalformedTokenException;
+import kuit3.backend.common.exception.jwt.bad_request.JwtUnsupportedTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

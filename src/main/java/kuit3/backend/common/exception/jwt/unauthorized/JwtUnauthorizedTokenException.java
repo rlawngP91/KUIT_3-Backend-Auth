@@ -1,14 +1,14 @@
-package kuit3.backend.common.exception.jwt;
+package kuit3.backend.common.exception.jwt.unauthorized;
 
 import kuit3.backend.common.response.status.ResponseStatus;
 import lombok.Getter;
 
 @Getter
-public class JwtExpiredTokenException extends RuntimeException {
+public class JwtUnauthorizedTokenException extends RuntimeException {
 
     private final ResponseStatus exceptionStatus;
 
-    public JwtExpiredTokenException(ResponseStatus exceptionStatus) {
+    public JwtUnauthorizedTokenException(ResponseStatus exceptionStatus) {
         super(exceptionStatus.getMessage());
         this.exceptionStatus = exceptionStatus;
     }
