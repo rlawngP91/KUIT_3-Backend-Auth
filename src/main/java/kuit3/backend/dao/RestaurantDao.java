@@ -1,10 +1,14 @@
 package kuit3.backend.dao;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import kuit3.backend.domain.restaurant.Restaurant;
 import kuit3.backend.dto.restaurant.GetCategoryResponse;
 import kuit3.backend.dto.restaurant.GetStoreResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -12,14 +16,16 @@ import java.util.Map;
 
 @Slf4j
 @Repository
+@RequiredArgsConstructor
 public class RestaurantDao {
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    // private final JPAQueryFactory queryFactory;
 
     public RestaurantDao(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public List<GetStoreResponse> getAllStores() {
+    public List<GetStoreResponse> getAllStores(long restaurantId) {
         String sql = "select * from Store";
 
         return jdbcTemplate.query(sql,

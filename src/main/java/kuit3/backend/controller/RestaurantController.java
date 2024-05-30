@@ -30,10 +30,11 @@ public class RestaurantController {
     private final MenuService menuService;
     private final MenuDao menuDao;
 
+    // paging 처리하기
     @RequestMapping("")
-    public BaseResponse<List<GetStoreResponse>> getStores() {
+    public BaseResponse<List<GetStoreResponse>> getStores(@RequestParam(defaultValue = "0") long lastRestaurantId) {
         log.info("[RestaurantController.getStores]");
-        return new BaseResponse<>(restaurantService.getAllStores());
+        return new BaseResponse<>(restaurantService.getAllStores(lastRestaurantId));
     }
     @RequestMapping("/sortedstores")
     public BaseResponse<List<GetStoreResponse>> getStoresSortedByMinimumPrice(@RequestParam(required = true) Integer minimumPrice) {
