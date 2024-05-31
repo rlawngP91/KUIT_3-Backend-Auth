@@ -13,16 +13,20 @@ import java.util.Map;
 @Slf4j
 @Repository
 public class RestaurantDao {
+    private final static int LIMIT_PER_PAGE = 10;
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     public RestaurantDao(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public List<GetStoreResponse> getAllStores() {
-        String sql = "select * from Store";
+    public List<GetStoreResponse> getAllStores(long lastpageId) {
+        String sql = String.format("SELECT * FROM store WHERE store_id > :lastPageId ORDER BY store_id ASC LIMIT %d", LIMIT_PER_PAGE);
 
-        return jdbcTemplate.query(sql,
+        Map<String, Long> param = Map.of(
+                "lastPageId", lastpageId);
+
+        return jdbcTemplate.query(sql, param,
                 (rs, rowNum) -> new GetStoreResponse(
                         rs.getString("store_name"),
                         rs.getLong("delivery_time"),

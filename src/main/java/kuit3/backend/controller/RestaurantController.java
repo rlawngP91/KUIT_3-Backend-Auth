@@ -31,9 +31,9 @@ public class RestaurantController {
     private final MenuDao menuDao;
 
     @RequestMapping("")
-    public BaseResponse<List<GetStoreResponse>> getStores() {
+    public BaseResponse<List<GetStoreResponse>> getStores(@RequestParam(required = false, defaultValue = "0") Integer lastpageId) {
         log.info("[RestaurantController.getStores]");
-        return new BaseResponse<>(restaurantService.getAllStores());
+        return new BaseResponse<>(restaurantService.getAllStores(lastpageId));
     }
     @RequestMapping("/sortedstores")
     public BaseResponse<List<GetStoreResponse>> getStoresSortedByMinimumPrice(@RequestParam(required = true) Integer minimumPrice) {

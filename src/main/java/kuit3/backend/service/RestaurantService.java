@@ -17,9 +17,9 @@ public class RestaurantService {
 
     private final RestaurantDao restaurantDao;
 
-    public List<GetStoreResponse> getAllStores() {
+    public List<GetStoreResponse> getAllStores(long lastpageId) {
         log.info("[RestaurantService.getAllStores]");
-        return restaurantDao.getAllStores();
+        return restaurantDao.getAllStores(lastpageId);
     }
     public List<GetStoreResponse> getStoresSortedByMinimumPrice(long minimumPrice) {
         log.info("[RestaurantService.getStoresSortedByMinimumPrice]");
