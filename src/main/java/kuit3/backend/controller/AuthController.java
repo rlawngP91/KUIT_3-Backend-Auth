@@ -38,7 +38,7 @@ public class AuthController {
      * 인가(JWT 검증) 테스트
      */
     @GetMapping("/test")
-    public BaseResponse<String> checkAuthorization(@CustomPreAuthorize Long userId) {
+    public BaseResponse<String> checkAuthorization(@CustomPreAuthorize long userId) {
         return new BaseResponse<>("userId=" + userId);
     }
 
