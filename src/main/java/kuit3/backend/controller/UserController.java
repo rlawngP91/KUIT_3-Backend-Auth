@@ -1,5 +1,6 @@
 package kuit3.backend.controller;
 
+import kuit3.backend.common.argument_resolver.CustomPreAuthorize;
 import kuit3.backend.common.exception.UserException;
 import kuit3.backend.common.response.BaseResponse;
 import kuit3.backend.dto.user.*;
@@ -38,8 +39,9 @@ public class UserController {
     /**
      * 회원 휴면
      */
-    @PatchMapping("/{userId}/dormant")
-    public BaseResponse<Object> modifyUserStatus_dormant(@PathVariable long userId) {
+    @PatchMapping("/dormant")
+    public BaseResponse<Object> modifyUserStatus_dormant(@CustomPreAuthorize long userId) {
+        log.info("modifyUserStatus_dormant called");
         userService.modifyUserStatus_dormant(userId);
         return new BaseResponse<>(null);
     }
@@ -47,8 +49,8 @@ public class UserController {
     /**
      * 회원 탈퇴
      */
-    @PatchMapping("/{userId}/deleted")
-    public BaseResponse<Object> modifyUserStatus_deleted(@PathVariable long userId) {
+    @PatchMapping("/deleted")
+    public BaseResponse<Object> modifyUserStatus_deleted(@CustomPreAuthorize long userId) {
         userService.modifyUserStatus_deleted(userId);
         return new BaseResponse<>(null);
     }
@@ -56,8 +58,8 @@ public class UserController {
     /**
      * 닉네임 변경
      */
-    @PatchMapping("/{userId}/nickname")
-    public BaseResponse<String> modifyNickname(@PathVariable long userId,
+    @PatchMapping("/nickname")
+    public BaseResponse<String> modifyNickname(@CustomPreAuthorize long userId,
                                                @Validated @RequestBody PatchNicknameRequest patchNicknameRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new UserException(INVALID_USER_VALUE, getErrorMessages(bindingResult));
