@@ -1,6 +1,6 @@
 package kuit3.backend.controller;
 
-import kuit3.backend.common.argument_resolver.PreAuthorize;
+import kuit3.backend.common.argument_resolver.CustomPreAuthorize;
 import kuit3.backend.common.exception.UserException;
 import kuit3.backend.common.response.BaseResponse;
 import kuit3.backend.dto.auth.LoginRequest;
@@ -38,7 +38,7 @@ public class AuthController {
      * 인가(JWT 검증) 테스트
      */
     @GetMapping("/test")
-    public BaseResponse<String> checkAuthorization(@PreAuthorize Long userId) {
+    public BaseResponse<String> checkAuthorization(@CustomPreAuthorize Long userId) {
         return new BaseResponse<>("userId=" + userId);
     }
 
