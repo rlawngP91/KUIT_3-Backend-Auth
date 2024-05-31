@@ -7,6 +7,7 @@ import kuit3.backend.common.exception.jwt.unauthorized.JwtInvalidTokenException;
 import kuit3.backend.common.exception.jwt.bad_request.JwtNoTokenException;
 import kuit3.backend.common.exception.jwt.bad_request.JwtUnsupportedTokenException;
 import kuit3.backend.jwt.JwtProvider;
+import kuit3.backend.jwt.JwtValidator;
 import kuit3.backend.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
     private static final String JWT_TOKEN_PREFIX = "Bearer ";
 
     private final JwtProvider jwtProvider;
+    private final JwtValidator jwtValidator;
     private final AuthService authService;
 
     @Override
@@ -56,7 +58,7 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
     }
 
     private void validateAccessToken(String accessToken) {
-        if (jwtProvider.isExpiredToken(accessToken)) {
+        if (jwtValidator.isExpiredToken(accessToken)) {
             throw new JwtExpiredTokenException(EXPIRED_TOKEN);
         }
     }
